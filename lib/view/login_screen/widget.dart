@@ -161,7 +161,7 @@ Widget SignupFields(BuildContext context) {
                       value.passwordController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text("Email and Password required"),
+                        content: Text("All fields are required"),
                       ),
                     );
                     return;

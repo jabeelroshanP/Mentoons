@@ -68,7 +68,8 @@ class LoginProvider extends ChangeNotifier {
       await authService.signUp(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
-      );
+        name: nameController.text.trim()
+       );
       clearFields();
 
       ScaffoldMessenger.of(

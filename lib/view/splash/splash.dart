@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentoons/controller/splash_provider/splash_provider.dart';
+import 'package:mentoons/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -30,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Provider.of<SplashProvider>(context);
 
     return Scaffold(
+      backgroundColor: AppColors.orange,
       body: Stack(
         children: [
 
