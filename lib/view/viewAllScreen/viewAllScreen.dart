@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mentoons/utils/colors.dart';
 import 'package:mentoons/view/assessments/assessments_page.dart';
-import 'package:mentoons/view/audio_stories/audio_stories.dart';
-import 'package:mentoons/view/comic_reading/comic_reading.dart';
-import 'package:mentoons/view/fun_games/fun_games.dart';
+import 'package:mentoons/view/audio_stories/audioListScreen.dart';
+ import 'package:mentoons/view/comic_reading/comic_reading.dart';
+import 'package:mentoons/view/fun_games/fun_gamesList.dart';
 import 'package:mentoons/view/home_screen/home_screen.dart';
 import 'package:mentoons/view/quiz_zone/quiz_zone.dart';
 import 'package:mentoons/widgets/app_text.dart';
@@ -43,20 +43,21 @@ class Viewallscreen extends StatelessWidget {
                   case 0:
                     Navigator.push(context, MaterialPageRoute(builder: (context) => AssessmentsPage(),));
                     break;
+
                   case 1:
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AudioStories(),));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const VideoListScreen(),));
                     break;
+
                   case 2:
                     Navigator.push(context, MaterialPageRoute(builder: (context) => ComicReading(),));
-
                     break;
+
                   case 3:
                     Navigator.push(context, MaterialPageRoute(builder: (context) => FunGames(),));
-
                     break;
+
                   case 4:
                     Navigator.push(context, MaterialPageRoute(builder: (context) => QuizZone(),));
-
                     break;
                 }
               },

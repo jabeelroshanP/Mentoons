@@ -5,10 +5,10 @@ import 'package:mentoons/controller/login_provider/login_provider.dart';
 import 'package:mentoons/utils/app_fonts.dart';
 import 'package:mentoons/utils/colors.dart';
 import 'package:mentoons/view/assessments/assessments_page.dart';
-import 'package:mentoons/view/audio_stories/audio_stories.dart';
-import 'package:mentoons/view/audio_stories/video_payer.dart';
+import 'package:mentoons/view/audio_stories/audioListScreen.dart';
+ import 'package:mentoons/view/audio_stories/video_payer.dart';
 import 'package:mentoons/view/comic_reading/comic_reading.dart';
-import 'package:mentoons/view/fun_games/fun_games.dart';
+import 'package:mentoons/view/fun_games/fun_gamesList.dart';
 import 'package:mentoons/view/login_screen/login_screen.dart';
 import 'package:mentoons/view/profile/profile.dart';
 import 'package:mentoons/view/quiz_zone/quiz_zone.dart';
@@ -35,7 +35,12 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
-        title: AppText(text: 'Hello, ${name}'),
+        title: Column(crossAxisAlignment: .start,
+          children: [
+            AppText(text: "Welcome",size: 12,weight: FontWeight.w400,font: AppFonts.futura,),
+            AppText(text: 'Hello, ${name}'),
+          ],
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
@@ -143,7 +148,7 @@ class HomeScreen extends StatelessWidget {
                         break;
 
                       case 1:
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const videoPlayer(),),);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const VideoListScreen(),));
                         break;
 
                       case 2:

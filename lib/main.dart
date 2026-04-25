@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mentoons/controller/BottomNavBar_Provider/BottomNavBar_Provider.dart';
+import 'package:mentoons/controller/game_provider/game_provier.dart';
 import 'package:mentoons/controller/login_provider/login_provider.dart';
 import 'package:mentoons/controller/splash_provider/splash_provider.dart';
 import 'package:mentoons/firebase_options.dart';
@@ -30,6 +31,7 @@ class _MyAppState extends State<MyApp> {
       ChangeNotifierProvider(create: (context) => SplashProvider(),),
       ChangeNotifierProvider(create: (context) => LoginProvider(),),
       ChangeNotifierProvider(create: (context) => BottomNavProvider(),),
+      ChangeNotifierProvider(create: (context) => GameProvider(),),
 
     ],
       child: MaterialApp(
