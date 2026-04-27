@@ -3,11 +3,8 @@ import 'package:mentoons/service/loginService/loginService.dart';
 import 'package:mentoons/view/bottomNavBar/bottomNavBar.dart';
 
 class LoginProvider extends ChangeNotifier {
-  // Navigation states
-  bool isTap = false;
   bool isLogin = true;
 
-  // Loading state
   bool isLoading = false;
 
   // Form validation states
@@ -19,20 +16,18 @@ class LoginProvider extends ChangeNotifier {
   bool showSignupPassword = false;
   bool showConfirmPassword = false;
 
-  // Authentication service
   final AuthService authService = AuthService();
 
-  // Text Controllers
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController confirmPasswordController =
-      TextEditingController();
+  TextEditingController();
 
   // Getters for form validation
   bool get isPasswordMatch =>
       passwordController.text == confirmPasswordController.text &&
-      passwordController.text.isNotEmpty;
+          passwordController.text.isNotEmpty;
 
   bool get isPasswordStrong {
     final password = passwordController.text;
@@ -58,18 +53,16 @@ class LoginProvider extends ChangeNotifier {
 
   void showLogin() {
     isLogin = true;
-    isTap = true;
     clearFields();
     notifyListeners();
   }
 
   void showSignup() {
     isLogin = false;
-    isTap = true;
     clearFields();
     notifyListeners();
   }
-  
+
   void toggleLoginPasswordVisibility() {
     showLoginPassword = !showLoginPassword;
     notifyListeners();
@@ -88,19 +81,19 @@ class LoginProvider extends ChangeNotifier {
   void validateLoginForm() {
     isLoginFormValid =
         emailController.text.trim().isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        isValidEmail;
+            passwordController.text.isNotEmpty &&
+            isValidEmail;
     notifyListeners();
   }
 
   void validateSignupForm() {
     isSignupFormValid =
         nameController.text.trim().isNotEmpty &&
-        emailController.text.trim().isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        confirmPasswordController.text.isNotEmpty &&
-        isValidEmail &&
-        isPasswordMatch;
+            emailController.text.trim().isNotEmpty &&
+            passwordController.text.isNotEmpty &&
+            confirmPasswordController.text.isNotEmpty &&
+            isValidEmail &&
+            isPasswordMatch;
     notifyListeners();
   }
 

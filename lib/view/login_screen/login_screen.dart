@@ -19,7 +19,6 @@ class _LoginScreenState extends State<LoginScreen>
   late AnimationController controller;
   late Animation<Offset> containerSlide;
   late Animation<double> containerFade;
-  late Animation<Offset> boyExit;
 
   @override
   void initState() {
@@ -45,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen>
       ),
     );
 
-
+    controller.forward();
   }
 
   @override
@@ -99,11 +98,10 @@ class _LoginScreenState extends State<LoginScreen>
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox()),
                 Center(
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: .center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
@@ -123,37 +121,37 @@ class _LoginScreenState extends State<LoginScreen>
                               SizedBox(height: height * 0.008),
                               AppText(
                                 text:
-                                    "Your mental wellness journey starts here",
+                                "Your mental wellness journey starts here",
                                 size: 14,
                                 color: Colors.white.withOpacity(0.9),
                               ),
                             ],
                           ),
                         ),
-
                         SizedBox(height: height * 0.02),
-                        if (loginProvider.isTap)
-                          FadeTransition(
-                            opacity: containerFade,
-                            child: SlideTransition(
-                              position: containerSlide,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.06,
+                        FadeTransition(
+                          opacity: containerFade,
+                          child: SlideTransition(
+                            position: containerSlide,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: width * 0.06,
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(28),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 20,
+                                      offset: const Offset(0, 10),
+                                    ),
+                                  ],
                                 ),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    borderRadius: BorderRadius.circular(28),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        blurRadius: 20,
-                                        offset: const Offset(0, 10),
-                                      ),
-                                    ],
-                                  ),
+                                child: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 300),
                                   child: loginProvider.isLogin
                                       ? LoginFields(context)
                                       : SignupFields(context),
@@ -161,9 +159,8 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ),
                           ),
-
+                        ),
                         SizedBox(height: height * 0.025),
-
                         Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: width * 0.06,
@@ -175,9 +172,10 @@ class _LoginScreenState extends State<LoginScreen>
                                   onTap: loginProvider.isLogin
                                       ? null
                                       : () {
-                                          loginProvider.showLogin();
-                                          controller.forward(from: 0);
-                                        },
+                                    loginProvider.showLogin();
+                                    controller.reset();
+                                    controller.forward();
+                                  },
                                   child: LoginOrSignupBtn(
                                     "Login",
                                     context,
@@ -191,9 +189,10 @@ class _LoginScreenState extends State<LoginScreen>
                                   onTap: !loginProvider.isLogin
                                       ? null
                                       : () {
-                                          loginProvider.showSignup();
-                                          controller.forward(from: 0);
-                                        },
+                                    loginProvider.showSignup();
+                                    controller.reset();
+                                    controller.forward();
+                                  },
                                   child: LoginOrSignupBtn(
                                     "Sign Up",
                                     context,
@@ -204,13 +203,11 @@ class _LoginScreenState extends State<LoginScreen>
                             ],
                           ),
                         ),
-
                         SizedBox(height: height * 0.03),
                       ],
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox()),
               ],
             ),
           );
@@ -221,10 +218,10 @@ class _LoginScreenState extends State<LoginScreen>
 }
 
 Widget LoginOrSignupBtn(
-  String text,
-  BuildContext context, {
-  required bool isActive,
-}) {
+    String text,
+    BuildContext context, {
+      required bool isActive,
+    }) {
   final height = MediaQuery.of(context).size.height;
   return Container(
     height: height * 0.065,
@@ -234,12 +231,12 @@ Widget LoginOrSignupBtn(
       borderRadius: BorderRadius.circular(16),
       boxShadow: isActive
           ? [
-              BoxShadow(
-                color: const Color(0xFFFF9F43).withOpacity(0.4),
-                blurRadius: 12,
-                offset: const Offset(0, 6),
-              ),
-            ]
+        BoxShadow(
+          color: const Color(0xFFFF9F43).withOpacity(0.4),
+          blurRadius: 12,
+          offset: const Offset(0, 6),
+        ),
+      ]
           : [],
       border: Border.all(color: Colors.white.withOpacity(0.5), width: 1.5),
     ),
