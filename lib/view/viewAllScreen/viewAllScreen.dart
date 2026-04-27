@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mentoons/utils/colors.dart';
 import 'package:mentoons/view/assessments/assessments_page.dart';
 import 'package:mentoons/view/audio_stories/audioListScreen.dart';
- import 'package:mentoons/view/comic_reading/comic_reading.dart';
+import 'package:mentoons/view/comic_reading/comic_reading.dart';
 import 'package:mentoons/view/fun_games/fun_gamesList.dart';
-import 'package:mentoons/view/home_screen/home_screen.dart';
-import 'package:mentoons/view/quiz_zone/quiz_zone.dart';
+import 'package:mentoons/view/quiz_zone/quiz_selection_screen.dart';
 import 'package:mentoons/widgets/app_text.dart';
 import 'package:mentoons/widgets/container.dart';
 
@@ -38,29 +37,51 @@ class Viewallscreen extends StatelessWidget {
 
             return SizedBox(
               height: cardHeight,
-              child: InkWell(onTap: () {
-                switch (index) {
-                  case 0:
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AssessmentsPage(),));
-                    break;
+              child: InkWell(
+                onTap: () {
+                  switch (index) {
+                    case 0:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AssessmentsPage(),
+                        ),
+                      );
+                      break;
 
-                  case 1:
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const VideoListScreen(),));
-                    break;
+                    case 1:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const VideoListScreen(),
+                        ),
+                      );
+                      break;
 
-                  case 2:
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ComicReading(),));
-                    break;
+                    case 2:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ComicReading()),
+                      );
+                      break;
 
-                  case 3:
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => FunGames(),));
-                    break;
+                    case 3:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FunGames()),
+                      );
+                      break;
 
-                  case 4:
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => QuizZone(),));
-                    break;
-                }
-              },
+                    case 4:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const QuizSelectionScreen(),
+                        ),
+                      );
+                      break;
+                  }
+                },
                 child: DefaultContainer(
                   color: Colors.orange.withValues(alpha: 0.7),
                   child: Padding(

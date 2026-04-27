@@ -39,6 +39,9 @@ dependencies:
   firebase_auth: ^6.4.0
   syncfusion_flutter_pdfviewer:
   video_player:
+  flutter_local_notifications:
+  firebase_messaging:
+  device_preview:
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +69,7 @@ flutter:
   assets:
    - assets/
    - assets/comicPdf/
+   - assets/assessment/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

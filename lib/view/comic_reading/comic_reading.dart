@@ -3,7 +3,7 @@ import 'package:mentoons/view/comic_reading/comic_pdf_view.dart';
 import 'package:mentoons/widgets/app_text.dart';
 
 class ComicReading extends StatelessWidget {
-    ComicReading({super.key});
+  ComicReading({super.key});
 
   final List<String> comics = [
     "assets/do_you_know_comic.jpg",
@@ -17,14 +17,11 @@ class ComicReading extends StatelessWidget {
     "assets/comicPdf/how_to_handle.pdf",
   ];
 
-
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-
       appBar: AppBar(
         title: const AppText(text: "Comic Reading"),
         titleSpacing: 0,
@@ -40,15 +37,15 @@ class ComicReading extends StatelessWidget {
             childAspectRatio: 0.75,
           ),
           itemBuilder: (context, index) {
-            return InkWell(onTap: () {
-              Navigator.push(
+            return InkWell(
+              onTap: () {
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ComicPdfViewer(
-                      pdfPath: comicPdfs[index],
-                    ),
-                  ),);
-            },
+                    builder: (_) => ComicPdfViewer(pdfPath: comicPdfs[index]),
+                  ),
+                );
+              },
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),

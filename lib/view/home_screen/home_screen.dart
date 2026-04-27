@@ -6,12 +6,9 @@ import 'package:mentoons/utils/app_fonts.dart';
 import 'package:mentoons/utils/colors.dart';
 import 'package:mentoons/view/assessments/assessments_page.dart';
 import 'package:mentoons/view/audio_stories/audioListScreen.dart';
- import 'package:mentoons/view/audio_stories/video_payer.dart';
 import 'package:mentoons/view/comic_reading/comic_reading.dart';
 import 'package:mentoons/view/fun_games/fun_gamesList.dart';
-import 'package:mentoons/view/login_screen/login_screen.dart';
-import 'package:mentoons/view/profile/profile.dart';
-import 'package:mentoons/view/quiz_zone/quiz_zone.dart';
+import 'package:mentoons/view/quiz_zone/quiz_selection_screen.dart';
 import 'package:mentoons/widgets/app_text.dart';
 import 'package:mentoons/widgets/container.dart';
 import 'package:provider/provider.dart';
@@ -35,9 +32,15 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
-        title: Column(crossAxisAlignment: .start,
+        title: Column(
+          crossAxisAlignment: .start,
           children: [
-            AppText(text: "Welcome",size: 12,weight: FontWeight.w400,font: AppFonts.futura,),
+            AppText(
+              text: "Welcome",
+              size: 12,
+              weight: FontWeight.w400,
+              font: AppFonts.futura,
+            ),
             AppText(text: 'Hello, ${name}'),
           ],
         ),
@@ -118,15 +121,17 @@ class HomeScreen extends StatelessWidget {
             ),
             Row(
               children: [
-                AppText(text: "Activities",size: 12),
+                AppText(text: "Activities", size: 12),
                 Spacer(),
-                InkWell(onTap: () {
-                  Provider.of<BottomNavProvider>(
-                    context,
-                    listen: false,
-                  ).changeIndex(1);
-                },
-                    child: AppText(text: "See All", size: 12)),
+                InkWell(
+                  onTap: () {
+                    Provider.of<BottomNavProvider>(
+                      context,
+                      listen: false,
+                    ).changeIndex(1);
+                  },
+                  child: AppText(text: "See All", size: 12),
+                ),
               ],
             ),
 
@@ -141,30 +146,53 @@ class HomeScreen extends StatelessWidget {
                 childAspectRatio: 0.9,
               ),
               itemBuilder: (context, index) {
-                return InkWell(onTap: () {
+                return InkWell(
+                  onTap: () {
                     switch (index) {
                       case 0:
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => AssessmentsPage(),));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AssessmentsPage(),
+                          ),
+                        );
                         break;
 
                       case 1:
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const VideoListScreen(),));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const VideoListScreen(),
+                          ),
+                        );
                         break;
 
                       case 2:
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ComicReading(),));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ComicReading(),
+                          ),
+                        );
                         break;
 
-                        case 3:
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => FunGames(),));
+                      case 3:
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FunGames()),
+                        );
                         break;
 
-                        case 4:
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => QuizZone(),));
+                      case 4:
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const QuizSelectionScreen(),
+                          ),
+                        );
                         break;
                     }
-
-                },
+                  },
                   child: Column(
                     children: [
                       Expanded(

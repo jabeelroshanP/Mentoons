@@ -21,10 +21,7 @@ class Bottomnavbar extends StatelessWidget {
     ];
 
     return Scaffold(
-       body: IndexedStack(
-        index: provider.currentIndex,
-        children: screens,
-      ),
+      body: IndexedStack(index: provider.currentIndex, children: screens),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -45,7 +42,7 @@ class Bottomnavbar extends StatelessWidget {
                 HapticFeedback.selectionClick();
                 provider.changeIndex(index);
               },
-               elevation: 0,
+              elevation: 0,
               backgroundColor: Colors.transparent,
               type: BottomNavigationBarType.fixed,
               selectedItemColor: AppColors.blue,

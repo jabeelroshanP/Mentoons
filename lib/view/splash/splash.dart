@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mentoons/controller/splash_provider/splash_provider.dart';
+import 'package:mentoons/service/loginService/loginService.dart';
 import 'package:mentoons/utils/colors.dart';
-import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,48 +9,70 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _rotationAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    Future.microtask(() {
-      Provider.of<SplashProvider>(
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    _rotationAnimation = Tween<double>(
+      begin: 0,
+      end: 2 * 3.1416,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+
+    _scaleAnimation = Tween<double>(
+      begin: 0.3,
+      end: 1.5,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
+
+    /// Start animation
+    _controller.forward();
+
+    /// Navigate after animation
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
         context,
-        listen: false,
-      ).startAnimation(context);
+        MaterialPageRoute(builder: (_) => const AuthWrapper()),
+      );
     });
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-    final splashProvider =
-        Provider.of<SplashProvider>(context);
-
     return Scaffold(
       backgroundColor: AppColors.orange,
-      body: Stack(
-        children: [
 
-          Center(
-            child: AnimatedContainer(
-              duration: const Duration(seconds: 2),
-              curve: Curves.easeOut,
-              transform: Matrix4.translationValues(
-                splashProvider.positionX,
-                0,
-                0,
-              ),
-              width: splashProvider.size,
-              child: Image.asset(
-                'assets/splash_icon.png',
-              ),
-            ),
-          ),
+      body: Center(
+        child: AnimatedBuilder(
+          animation: _controller,
 
-        ],
+          builder: (context, child) {
+            return Transform.rotate(
+              angle: _rotationAnimation.value,
+
+              child: Transform.scale(
+                scale: _scaleAnimation.value,
+
+                child: Image.asset('assets/mentoons_logo.png', width: 150),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

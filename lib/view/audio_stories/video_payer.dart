@@ -75,7 +75,8 @@ class VideoPlayerScreen extends StatelessWidget {
                                     Navigator.pop(context);
                                   },
                                 ),
-                                Text(title,
+                                Text(
+                                  title,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -141,19 +142,44 @@ class VideoPlayerScreen extends StatelessWidget {
                                   Slider(
                                     activeColor: Colors.red,
                                     inactiveColor: Colors.white24,
-                                    value: provider.controller.value.position.inSeconds.toDouble()
+                                    value: provider
+                                        .controller
+                                        .value
+                                        .position
+                                        .inSeconds
+                                        .toDouble()
                                         .clamp(
                                           0,
-                                          provider.controller.value.duration.inSeconds.toDouble(),),
-                                    max: provider.controller.value.duration.inSeconds > 0
-                                        ? provider.controller.value.duration.inSeconds.toDouble() : 1,
+                                          provider
+                                              .controller
+                                              .value
+                                              .duration
+                                              .inSeconds
+                                              .toDouble(),
+                                        ),
+                                    max:
+                                        provider
+                                                .controller
+                                                .value
+                                                .duration
+                                                .inSeconds >
+                                            0
+                                        ? provider
+                                              .controller
+                                              .value
+                                              .duration
+                                              .inSeconds
+                                              .toDouble()
+                                        : 1,
                                     onChanged: provider.seek,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 20,
                                     ),
-                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           provider.formatDuration(

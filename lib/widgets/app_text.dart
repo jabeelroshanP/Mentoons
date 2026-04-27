@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentoons/utils/app_fonts.dart';
- 
-class AppText extends StatelessWidget {
 
+class AppText extends StatelessWidget {
   final String text;
   final double size;
   final Color color;

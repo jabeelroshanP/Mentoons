@@ -11,7 +11,7 @@ class ProfileScreen extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50], 
+      backgroundColor: Colors.grey[50],
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -29,13 +29,21 @@ class ProfileScreen extends StatelessWidget {
                             ? NetworkImage(user!.photoURL!)
                             : null,
                         child: user?.photoURL == null
-                            ? const Icon(Icons.person, size: 50, color: AppColors.blue)
+                            ? const Icon(
+                                Icons.person,
+                                size: 50,
+                                color: AppColors.blue,
+                              )
                             : null,
                       ),
                       CircleAvatar(
                         radius: 18,
                         backgroundColor: AppColors.blue,
-                        child: const Icon(Icons.edit, size: 16, color: Colors.white),
+                        child: const Icon(
+                          Icons.edit,
+                          size: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -63,7 +71,11 @@ class ProfileScreen extends StatelessWidget {
                   ProfileTile(Icons.person_outline, "My Account", () {}),
                   ProfileTile(Icons.notifications_none, "Notifications", () {}),
                   ProfileTile(Icons.history, "Reading History", () {}),
-                  ProfileTile(Icons.shield_outlined, "Privacy & Security", () {}),
+                  ProfileTile(
+                    Icons.shield_outlined,
+                    "Privacy & Security",
+                    () {},
+                  ),
                   ProfileTile(Icons.help_outline, "Help Support", () {}),
 
                   const Padding(
@@ -73,10 +85,10 @@ class ProfileScreen extends StatelessWidget {
 
                   // Logout Tile
                   ProfileTile(
-                      Icons.logout,
-                      "Log Out",
-                          () => showLogoutDialog(context),
-                      isLogout: true
+                    Icons.logout,
+                    "Log Out",
+                    () => showLogoutDialog(context),
+                    isLogout: true,
                   ),
                 ],
               ),
@@ -88,7 +100,12 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // Helper method to build consistent menu items
-  Widget ProfileTile(IconData icon, String title, VoidCallback onTap, {bool isLogout = false}) {
+  Widget ProfileTile(
+    IconData icon,
+    String title,
+    VoidCallback onTap, {
+    bool isLogout = false,
+  }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -110,7 +127,11 @@ class ProfileScreen extends StatelessWidget {
           weight: FontWeight.w500,
           color: isLogout ? Colors.red : Colors.black87,
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Colors.grey,
+        ),
         onTap: onTap,
       ),
     );
@@ -123,13 +144,16 @@ class ProfileScreen extends StatelessWidget {
         title: const Text("Logout"),
         content: const Text("Are you sure you want to logout?"),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
           TextButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                if (context.mounted) Navigator.pop(context);
-              },
-              child: const Text("Logout", style: TextStyle(color: Colors.red))
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              if (context.mounted) Navigator.pop(context);
+            },
+            child: const Text("Logout", style: TextStyle(color: Colors.red)),
           ),
         ],
       ),

@@ -17,8 +17,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
-
   late Animation<Offset> containerSlide;
+  late Animation<double> containerFade;
   late Animation<Offset> boyExit;
 
   @override
@@ -27,26 +27,25 @@ class _LoginScreenState extends State<LoginScreen>
 
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 800),
     );
 
     containerSlide =
         Tween<Offset>(begin: const Offset(-1.2, 0), end: Offset.zero).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(0.0, 0.7, curve: Curves.easeOut),
+            curve: const Interval(0.0, 0.6, curve: Curves.easeOutCubic),
           ),
         );
 
-    boyExit = Tween<Offset>(begin: Offset.zero, end: const Offset(1.5, 0))
-        .animate(
-          CurvedAnimation(
-            parent: controller,
-            curve: const Interval(0.5, 1.0, curve: Curves.easeInOut),
-          ),
-        );
+    containerFade = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
+      ),
+    );
 
-    
+
   }
 
   @override
@@ -57,91 +56,161 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-
     final height = MediaQuery.of(context).size.height;
-final width  = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Consumer<LoginProvider>(
-        builder: (context, value, child) {
+        builder: (context, loginProvider, child) {
           return Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/sign_orange.png'),
-                fit: BoxFit.cover,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  const Color(0xFFFF9F43).withOpacity(0.9),
+                  const Color(0xFFFF6B6B).withOpacity(0.85),
+                ],
               ),
             ),
             child: Stack(
               children: [
+                Positioned(
+                  top: -50,
+                  right: -50,
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.1),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: -80,
+                  left: -80,
+                  child: Container(
+                    width: 250,
+                    height: 250,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.08),
+                    ),
+                  ),
+                ),
+                Expanded(child: SizedBox()),
                 Center(
                   child: SingleChildScrollView(
                     child: Column(
+                      mainAxisAlignment: .center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                          AppText(
-                          text: TextConsts.letsGetSmart,
-                          size: height * 0.040,
-                          font: AppFonts.garamond,
-                          weight: FontWeight.bold,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: height * 0.03,
+                            bottom: height * 0.02,
+                          ),
+                          child: Column(
+                            children: [
+                              AppText(
+                                text: TextConsts.letsGetSmart,
+                                size: height * 0.048,
+                                font: AppFonts.garamond,
+                                weight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                              SizedBox(height: height * 0.008),
+                              AppText(
+                                text:
+                                    "Your mental wellness journey starts here",
+                                size: 14,
+                                color: Colors.white.withOpacity(0.9),
+                              ),
+                            ],
+                          ),
                         ),
-                    
-                          SizedBox(height: height * 0.010),
-                    
-                        if (value.isTap)
-                          SingleChildScrollView(
+
+                        SizedBox(height: height * 0.02),
+                        if (loginProvider.isTap)
+                          FadeTransition(
+                            opacity: containerFade,
                             child: SlideTransition(
                               position: containerSlide,
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.06,
+                                ),
                                 child: Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                     color: AppColors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: const [
+                                    borderRadius: BorderRadius.circular(28),
+                                    boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 12,
-                                        offset: Offset(0, 5),
+                                        color: Colors.black.withOpacity(0.2),
+                                        blurRadius: 20,
+                                        offset: const Offset(0, 10),
                                       ),
                                     ],
                                   ),
-                                  child: value.isLogin
+                                  child: loginProvider.isLogin
                                       ? LoginFields(context)
                                       : SignupFields(context),
                                 ),
                               ),
                             ),
                           ),
-                    
-                        const SizedBox(height: 20),
-                    
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                             GestureDetector(
-                              onTap: () {
-                                context.read<LoginProvider>().showLogin();
-                                 controller.forward(from: 0);
-                              },
-                              child: LoginOrSignupBtn("Login",context),
-                            ),
-                    
-                            const SizedBox(width: 10),
-                    
-                             GestureDetector(
-                              onTap: () {
-                                context.read<LoginProvider>().showSignup();
-                                 controller.forward(from: 0);
-                              },
-                              child: LoginOrSignupBtn("Sign Up",context),
-                            ),
-                          ],
+
+                        SizedBox(height: height * 0.025),
+
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: width * 0.06,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: loginProvider.isLogin
+                                      ? null
+                                      : () {
+                                          loginProvider.showLogin();
+                                          controller.forward(from: 0);
+                                        },
+                                  child: LoginOrSignupBtn(
+                                    "Login",
+                                    context,
+                                    isActive: loginProvider.isLogin,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: width * 0.03),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: !loginProvider.isLogin
+                                      ? null
+                                      : () {
+                                          loginProvider.showSignup();
+                                          controller.forward(from: 0);
+                                        },
+                                  child: LoginOrSignupBtn(
+                                    "Sign Up",
+                                    context,
+                                    isActive: !loginProvider.isLogin,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+
+                        SizedBox(height: height * 0.03),
                       ],
                     ),
                   ),
                 ),
+                Expanded(child: SizedBox()),
               ],
             ),
           );
@@ -151,20 +220,34 @@ final width  = MediaQuery.of(context).size.width;
   }
 }
 
-Widget LoginOrSignupBtn(String text,BuildContext context) {
-   final height = MediaQuery.of(context).size.height;
-final width  = MediaQuery.of(context).size.width;
+Widget LoginOrSignupBtn(
+  String text,
+  BuildContext context, {
+  required bool isActive,
+}) {
+  final height = MediaQuery.of(context).size.height;
   return Container(
-    height: height * 0.06,
-    width:width * 0.22,
+    height: height * 0.065,
     alignment: Alignment.center,
     decoration: BoxDecoration(
-      color: AppColors.blue,
-      borderRadius: BorderRadius.circular(15),
-      boxShadow: const [
-        BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4)),
-      ],
+      color: isActive ? const Color(0xFFFF9F43) : Colors.white.withOpacity(0.3),
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: isActive
+          ? [
+              BoxShadow(
+                color: const Color(0xFFFF9F43).withOpacity(0.4),
+                blurRadius: 12,
+                offset: const Offset(0, 6),
+              ),
+            ]
+          : [],
+      border: Border.all(color: Colors.white.withOpacity(0.5), width: 1.5),
     ),
-    child: AppText(text: text, color: Colors.white, weight: FontWeight.bold),
+    child: AppText(
+      text: text,
+      color: isActive ? Colors.white : Colors.white.withOpacity(0.8),
+      weight: FontWeight.w700,
+      size: 16,
+    ),
   );
 }

@@ -6,15 +6,10 @@ class FunGames extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Game Lobby"),
-      ),
+      appBar: AppBar(title: const Text("Game Lobby")),
 
       body: Padding(
         padding: const EdgeInsets.all(12),
@@ -22,8 +17,7 @@ class FunGames extends StatelessWidget {
         child: GridView.builder(
           itemCount: 1,
 
-          gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
@@ -33,27 +27,22 @@ class FunGames extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const GameScreen(),
-                    ),
-                  );
-               },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GameScreen()),
+                );
+              },
 
               child: Column(
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
-
                   /// Card (Image Only)
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
 
-                      borderRadius:
-                      BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14),
 
                       boxShadow: [
                         BoxShadow(
@@ -65,8 +54,7 @@ class FunGames extends StatelessWidget {
                     ),
 
                     child: ClipRRect(
-                      borderRadius:
-                      BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14),
 
                       child: Image.asset(
                         "assets/flip_match.png",
@@ -85,14 +73,10 @@ class FunGames extends StatelessWidget {
                   /// Title OUTSIDE card
                   const Text(
                     "Flip & Match",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
 
                   const SizedBox(height: 4),
-
                 ],
               ),
             );

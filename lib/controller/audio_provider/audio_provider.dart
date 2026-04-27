@@ -4,15 +4,15 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter/services.dart';
 
 class VideoPlayerProvider extends ChangeNotifier {
-
   late VideoPlayerController controller;
 
   bool showControls = true;
   bool isFullScreen = false;
 
   Timer? hideTimer;
+
   Future<void> initializeVideo(String url) async {
-    controller = VideoPlayerController.networkUrl(Uri.parse(url),);
+    controller = VideoPlayerController.networkUrl(Uri.parse(url));
     await controller.initialize();
     controller.play();
     startHideTimer();
@@ -27,8 +27,8 @@ class VideoPlayerProvider extends ChangeNotifier {
 
     hideTimer = Timer(const Duration(seconds: 2), () {
       showControls = false;
-          notifyListeners();
-        });
+      notifyListeners();
+    });
   }
 
   void toggleControls() {
@@ -44,7 +44,6 @@ class VideoPlayerProvider extends ChangeNotifier {
   }
 
   void skip(int seconds) {
-
     final position = controller.value.position;
 
     final duration = controller.value.duration;
@@ -64,7 +63,6 @@ class VideoPlayerProvider extends ChangeNotifier {
   }
 
   void togglePlayPause() {
-
     if (controller.value.isPlaying) {
       controller.pause();
     } else {
@@ -77,46 +75,32 @@ class VideoPlayerProvider extends ChangeNotifier {
   }
 
   void toggleFullScreen() {
-
     isFullScreen = !isFullScreen;
 
     if (isFullScreen) {
-
-      SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.immersiveSticky,
-      );
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
-
     } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-      SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.edgeToEdge,
-      );
-
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-      ]);
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     }
 
     notifyListeners();
   }
 
   void seek(double seconds) {
-    controller.seekTo(
-      Duration(seconds: seconds.toInt()),
-    );
+    controller.seekTo(Duration(seconds: seconds.toInt()));
 
     startHideTimer();
   }
 
   bool get isBuffering {
-
-    return controller.value.isBuffering ||
-        !controller.value.isInitialized;
+    return controller.value.isBuffering || !controller.value.isInitialized;
   }
 
   void disposeVideo() {
@@ -124,13 +108,10 @@ class VideoPlayerProvider extends ChangeNotifier {
 
     controller.dispose();
 
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   String formatDuration(Duration d) {
-
     return "${d.inMinutes.remainder(60).toString().padLeft(2, '0')}:${d.inSeconds.remainder(60).toString().padLeft(2, '0')}";
   }
 }
